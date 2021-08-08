@@ -17,14 +17,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField]private float turnSpeed = 15f;
     private float animSmoothIncrement = 0;
     private Vector3 inputMove;
+    private bool havePowers;
 
     [Header("Player Aim")]
     [SerializeField]private CinemachineVirtualCamera cinemachineVirtualCamera;
     [SerializeField]private Transform defaultTarget;
     public Transform target;
     private bool isLookAtTarget;
-    private bool isWalk;
-    private bool isAttack;
+    private bool isWalking;
+    private bool isAttacking;
+    private bool isDefending;
 
     private void Start()
     {
@@ -49,17 +51,7 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {   
-        Vector3 movement = Vector3.zero;
-
-        if(!isLookAtTarget)
-        {
-            movement = transform.right * inputMove.x + mainCamera.transform.forward * inputMove.y;
-        }
-        else
-        {
-            movement = transform.right * inputMove.x + transform.forward * inputMove.y;
-        }
-
+        Vector3 movement = transform.right * inputMove.x + transform.forward * inputMove.y;
         character.Move(movement * stepSpeed * Time.deltaTime);
     }
 
@@ -73,14 +65,17 @@ public class PlayerController : MonoBehaviour
         else if(target != null)
         {
             Vector3 direction = target.position - transform.position;
-            direction.Set(direction.x, transform.position.y, direction.z);
-            transform.localRotation = Quaternion.LookRotation(direction, transform.up);
+            direction.Set(direction.x, 0f, direction.z);
+            transform.localRotation = Quaternion.LookRotation(direction, Vector3.up);
         }
     }
 
     void ApplyGravity()
     {
-        character.Move(new Vector3(0, gravity, 0));
+        if(!character.isGrounded)
+        {
+            character.Move(new Vector3(0, gravity, 0));
+        }
     }
 
     void SetTarget()
@@ -101,10 +96,10 @@ public class PlayerController : MonoBehaviour
 
     void Animations()
     {
-        isWalk = inputMove.magnitude > 0.1f;
-        playerAnimator.SetBool("isWalk", isWalk);
+        isWalking = inputMove.magnitude > 0.1f;
+        playerAnimator.SetBool("isWalk", isWalking);
 
-        if(isWalk && animSmoothIncrement < 1)
+        if(isWalking && animSmoothIncrement < 1)
         {
             playerAnimator.SetFloat("velocity", animSmoothIncrement += Time.deltaTime);
         }
@@ -117,33 +112,34 @@ public class PlayerController : MonoBehaviour
     #region Attack
     void Attack1()
     {
-        if(!isAttack)
+        if(!isAttacking && !isDefending)
         {
-            isAttack = true;
+            isAttacking = true;
             playerAnimator.SetTrigger("Attack1");
         }
     }
 
     void Attack2()
     {
-        if(!isAttack)
+        if(!isAttacking && !isDefending)
         {
-            isAttack = true;
+            isAttacking = true;
             playerAnimator.SetTrigger("Attack2");
         }
     }
 
     public void FinishAttack() //called by animator on exit animation
     {
-        isAttack = false;
+        isAttacking = false;
     }
 
     #endregion
 
     void Defend(bool def)
     {
-        playerAnimator.SetBool("isDefend", def);
-        shieldCollider.enabled = def;
+        isDefending = def;
+        playerAnimator.SetBool("isDefend", isDefending);
+        shieldCollider.enabled = isDefending;
     }
 
     void Interact()
