@@ -46,6 +46,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Inventory",
+                    "type": "Button",
+                    "id": "bab07bee-826e-4a82-96ac-57926650c965",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Pause",
                     "type": "Button",
                     "id": "1fe04a54-ca1a-4623-8951-27d285a67f48",
@@ -154,7 +162,7 @@
                 {
                     "name": "",
                     "id": "8b3e448d-c473-408a-af88-d63858107351",
-                    "path": "<Keyboard>/space",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keybord + Mouse",
@@ -176,7 +184,7 @@
                 {
                     "name": "",
                     "id": "49d3e984-9169-47d6-94a2-4da88c9342d0",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keybord + Mouse",
@@ -258,6 +266,28 @@
                     "processors": "",
                     "groups": "GamePad",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0b037aa7-9c67-4aa2-b6d9-4567cbe8e9ba",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keybord + Mouse",
+                    "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9c82d7a7-44e3-4c5f-b98e-6bcc4e917a43",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
