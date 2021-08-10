@@ -18,9 +18,10 @@ public class PlayerController : MonoBehaviour, IHealthSystem
     [SerializeField]private float gravity = -9.81f;
     [SerializeField]private float stepSpeed;
     [SerializeField]private float turnSpeed = 15f;
+    [SerializeField]private float delayAttackOneSpearEffect = 0.5f;
+    [SerializeField]private float delayToAttackOne = 0.4f;
     private float animSmoothIncrement = 0;
     private Vector3 inputMove;
-    private bool havePowers;
 
     [Header("Player Aim")]
     [SerializeField]private CinemachineVirtualCamera cinemachineVirtualCamera;
@@ -40,7 +41,6 @@ public class PlayerController : MonoBehaviour, IHealthSystem
     [SerializeField] private GameObject attack1ParticlePrefab;
 
     [Header("Player Power Position")]
-    [SerializeField] private Transform attackOneEffectSpearPoint;
     [SerializeField] private Transform attackOnePoint;
     [SerializeField] private Transform attackTwoPoint;
 
@@ -186,15 +186,23 @@ public class PlayerController : MonoBehaviour, IHealthSystem
                 fireEffectParticle.Play();
                 if(target != null)
                 {
-                    Instantiate(attack1ParticlePrefab, target.position, Quaternion.identity);
+                    StartCoroutine(InstantiateAttackDelay(target.position));
                 }
                 else
                 {
-                    Instantiate(attack1ParticlePrefab, attackOnePoint.position, Quaternion.identity);
+                    StartCoroutine(InstantiateAttackDelay(attackOnePoint.position));
                 }
                 
             }
         }
+    }
+
+    IEnumerator InstantiateAttackDelay(Vector3 position)
+    {
+        yield return new WaitForSeconds(delayAttackOneSpearEffect);
+        attack1SpearParticle.Play();
+        yield return new WaitForSeconds(delayToAttackOne);
+        Instantiate(attack1ParticlePrefab, position, Quaternion.identity);
     }
 
     void Attack2()
