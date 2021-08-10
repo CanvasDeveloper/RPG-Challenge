@@ -4,11 +4,14 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IHealthSystem
 {
     private Camera mainCamera;
     private CharacterController character;
     private Animator playerAnimator;
+    private PlayerAimCheckCollision aimCheckCollision;
+    private ShotSystem shotSystem;
+    private HealthSystem healthSystem;
 
     [Header("Player Settings")]
     [SerializeField]private BoxCollider shieldCollider;
@@ -22,18 +25,29 @@ public class PlayerController : MonoBehaviour
     [Header("Player Aim")]
     [SerializeField]private CinemachineVirtualCamera cinemachineVirtualCamera;
     [SerializeField]private Transform defaultTarget;
-    public Transform target;
+    private Transform target;
     private bool isLookAtTarget;
     private bool isWalking;
     private bool isAttacking;
     private bool isDefending;
 
+    [Header("Player Power")]
+    [SerializeField] private ParticleSystem fireEffectParticle;
+    [SerializeField] private ParticleSystem fireSparklesParticle;
+    [SerializeField] private Transform attackOnePoint;
+    [SerializeField] private Transform attackTwoPoint;
+    [SerializeField] private SkinnedMeshRenderer playerMesh;
+    [SerializeField] private bool isMage;
+
     private void Start()
     {
         character = GetComponent<CharacterController>();
         playerAnimator = GetComponent<Animator>();
+        aimCheckCollision = GetComponentInChildren<PlayerAimCheckCollision>();
+        shotSystem = GetComponent<ShotSystem>();
+        healthSystem = GetComponent<HealthSystem>();
 
-        shieldCollider.enabled = false;
+        SetShieldCollisor(false);
         cinemachineVirtualCamera.LookAt = defaultTarget;
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -44,9 +58,9 @@ public class PlayerController : MonoBehaviour
     {
         Move();
         ApplyGravity();
-        SetTarget();
         Rotate();
         Animations();
+        ResetTarget();
     }
 
     void Move()
@@ -59,8 +73,7 @@ public class PlayerController : MonoBehaviour
     {
         if(!isLookAtTarget && inputMove.y > 0.7f)
         {
-            float yawCam = mainCamera.transform.eulerAngles.y;
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(0, yawCam, 0), turnSpeed * Time.deltaTime);
+            RotateToForwardCam(turnSpeed);
         }
         else if(target != null)
         {
@@ -68,6 +81,12 @@ public class PlayerController : MonoBehaviour
             direction.Set(direction.x, 0f, direction.z);
             transform.localRotation = Quaternion.LookRotation(direction, Vector3.up);
         }
+    }
+
+    void RotateToForwardCam(float rotSpeed)
+    {
+        float yawCam = mainCamera.transform.eulerAngles.y;
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(0, yawCam, 0), rotSpeed * Time.deltaTime);
     }
 
     void ApplyGravity()
@@ -78,19 +97,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void SetTarget()
+    void ActivePower()
     {
-        if(target != null && cinemachineVirtualCamera.LookAt != target)
+        if(!isMage)
         {
-            isLookAtTarget = true;
-            cinemachineVirtualCamera.gameObject.SetActive(true);
-            cinemachineVirtualCamera.LookAt = target;
-        }
-        else if(target == null && cinemachineVirtualCamera.LookAt != defaultTarget)
-        {
-            isLookAtTarget = false;
-            cinemachineVirtualCamera.gameObject.SetActive(false);
-            cinemachineVirtualCamera.LookAt = defaultTarget;
+            isMage = true;
+            playerMesh.material.EnableKeyword("_EMISSION");
+            fireEffectParticle.Play();
+            fireSparklesParticle.Play();
         }
     }
 
@@ -101,13 +115,54 @@ public class PlayerController : MonoBehaviour
 
         if(isWalking && animSmoothIncrement < 1)
         {
-            playerAnimator.SetFloat("velocity", animSmoothIncrement += Time.deltaTime);
+            playerAnimator.SetFloat("velocity", animSmoothIncrement += (Time.deltaTime * 3));
         }
         else if(animSmoothIncrement > 0)
         {
-            playerAnimator.SetFloat("velocity", animSmoothIncrement -= Time.deltaTime);
+            playerAnimator.SetFloat("velocity", animSmoothIncrement -= (Time.deltaTime * 3));
         }
     }
+
+    #region CameraTarget
+    void SetTarget()
+    {   
+        if(target == null)
+        {
+            RotateToForwardCam(15f);
+
+            if(aimCheckCollision.target != null)
+            {
+                isLookAtTarget = true;
+                target = aimCheckCollision.target;
+                cinemachineVirtualCamera.gameObject.SetActive(true);
+                cinemachineVirtualCamera.LookAt = target;
+                UIController.Instance.SetTargetHUD();
+            }
+        }
+        else
+        {
+           DisableTarget();
+        }
+    }
+
+    void DisableTarget()
+    {
+        isLookAtTarget = false;
+        target = null;
+        UIController.Instance.SetTargetHUD();
+        cinemachineVirtualCamera.gameObject.SetActive(false);
+        cinemachineVirtualCamera.LookAt = defaultTarget;
+    }
+
+    void ResetTarget()
+    {
+        if(aimCheckCollision.target == null && cinemachineVirtualCamera.LookAt != defaultTarget)
+        {
+            DisableTarget();
+        }
+    }
+
+    #endregion
 
     #region Attack
     void Attack1()
@@ -125,6 +180,12 @@ public class PlayerController : MonoBehaviour
         {
             isAttacking = true;
             playerAnimator.SetTrigger("Attack2");
+
+            if(isMage)
+            {
+                fireEffectParticle.Play();
+                shotSystem.Fire(attackTwoPoint);
+            }
         }
     }
 
@@ -139,12 +200,26 @@ public class PlayerController : MonoBehaviour
     {
         isDefending = def;
         playerAnimator.SetBool("isDefend", isDefending);
-        shieldCollider.enabled = isDefending;
+    }
+
+    public void SetShieldCollisor(bool enabled) //called by animator
+    {
+        shieldCollider.enabled = enabled;
     }
 
     void Interact()
     {
 
+    }
+
+    public void GetHit(int damage)
+    {
+        healthSystem.Damage(damage);
+    }
+
+    public void Death()
+    {
+        playerAnimator.SetTrigger("Death");
     }
 
     #region NEW INPUT SYSTEM
@@ -161,7 +236,12 @@ public class PlayerController : MonoBehaviour
 
     public void OnAttack2(InputAction.CallbackContext value)
     {
-        if(value.started) { Attack2(); }
+        if(value.started) { Attack2(); ActivePower(); }
+    }
+
+    public void OnFocus(InputAction.CallbackContext value)
+    {
+        if(value.started) { SetTarget(); }
     }
 
     public void OnDefend(InputAction.CallbackContext value)

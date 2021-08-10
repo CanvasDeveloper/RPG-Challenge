@@ -6,6 +6,9 @@ TagManager:
   tags:
   - PlayerDef
   - PlayerHit
+  - FxTemporaire
+  - Ground
+  - PlayerMageHit
   layers:
   - Default
   - TransparentFX
@@ -17,7 +20,7 @@ TagManager:
   - 
   - Player
   - Wall
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -42,4 +45,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: HUD
+    uniqueID: 618130573
     locked: 0

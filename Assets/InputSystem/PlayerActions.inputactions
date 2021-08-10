@@ -30,6 +30,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Focus",
+                    "type": "Button",
+                    "id": "b39e47a1-c64b-4746-9b57-66bda710acf6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Defend",
                     "type": "Button",
                     "id": "c43dcc0f-17c7-499a-a07f-428daf4f2868",
@@ -288,6 +296,28 @@
                     "processors": "",
                     "groups": "GamePad",
                     "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "03c872b2-60c2-44d4-978d-e8ede2e8b010",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keybord + Mouse",
+                    "action": "Focus",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0ea1de1c-0459-4182-adcb-41c39ebadd70",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "Focus",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
