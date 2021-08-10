@@ -4,6 +4,14 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
 
+public enum PlayerState
+{
+    ALIVE, DEAD
+}
+
+
+[RequireComponent(typeof(ShotSystem))]
+[RequireComponent(typeof(HealthSystem))]
 public class PlayerController : MonoBehaviour, IHealthSystem
 {
     private Camera mainCamera;
@@ -14,6 +22,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
     private HealthSystem healthSystem;
 
     [Header("Player Settings")]
+    public PlayerState currentState;
     [SerializeField]private BoxCollider shieldCollider;
     [SerializeField]private float gravity = -9.81f;
     [SerializeField]private float stepSpeed;
@@ -27,6 +36,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
     [SerializeField]private CinemachineVirtualCamera cinemachineVirtualCamera;
     [SerializeField]private Transform defaultTarget;
     private Transform target;
+    private EnemyStateController enemyTargetState;
     private bool isLookAtTarget;
     private bool isWalking;
     private bool isAttacking;
@@ -65,11 +75,14 @@ public class PlayerController : MonoBehaviour, IHealthSystem
 
     private void Update() 
     {
-        Move();
         ApplyGravity();
-        Rotate();
-        Animations();
-        ResetTarget();
+        if(currentState != PlayerState.DEAD)
+        {
+            Move();
+            Rotate();
+            Animations();
+            ResetTarget();
+        }
     }
 
     void Move()
@@ -88,17 +101,11 @@ public class PlayerController : MonoBehaviour, IHealthSystem
 
     void Rotate()
     {
-        if(!isLookAtTarget)
+        if(!isLookAtTarget && inputMove.magnitude != 0)
         {
             float targetAngle = Mathf.Atan2(inputMove.x, inputMove.y) * Mathf.Rad2Deg + mainCamera.transform.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSpeed, 0.1f);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-            //if(inputMove.y > 0.7f)
-            //{
-            //    RotateToForwardCam(turnSpeed); //Faz girar para frente
-            //}
-            
         }
         else if(target != null)
         {
@@ -108,7 +115,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
         }
     }
 
-    void RotateToForwardCam(float rotSpeed) //rotaciona para camera
+    void RotateToForwardCam(float rotSpeed)
     {
         float yawCam = mainCamera.transform.eulerAngles.y;
         transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(0, yawCam, 0), rotSpeed * Time.deltaTime);
@@ -159,8 +166,9 @@ public class PlayerController : MonoBehaviour, IHealthSystem
             {
                 isLookAtTarget = true;
                 target = aimCheckCollision.target;
+                enemyTargetState = target.GetComponent<EnemyStateController>();
                 cinemachineVirtualCamera.gameObject.SetActive(true);
-                cinemachineVirtualCamera.LookAt = target;
+                cinemachineVirtualCamera.LookAt = target.transform;
                 UIController.Instance.SetTargetHUD();
             }
         }
@@ -174,6 +182,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
     {
         isLookAtTarget = false;
         target = null;
+        enemyTargetState = null;
         UIController.Instance.SetTargetHUD();
         cinemachineVirtualCamera.gameObject.SetActive(false);
         cinemachineVirtualCamera.LookAt = defaultTarget;
@@ -182,6 +191,10 @@ public class PlayerController : MonoBehaviour, IHealthSystem
     void ResetTarget()
     {
         if(aimCheckCollision.target == null && cinemachineVirtualCamera.LookAt != defaultTarget)
+        {
+            DisableTarget();
+        }
+        else if(enemyTargetState != null && enemyTargetState.currentState == EnemyState.DEAD)
         {
             DisableTarget();
         }
@@ -202,7 +215,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
                 fireEffectParticle.Play();
                 if(target != null)
                 {
-                    StartCoroutine(InstantiateAttackDelay(target.position));
+                    StartCoroutine(InstantiateAttackDelay(target.transform.position));
                 }
                 else
                 {
@@ -275,6 +288,19 @@ public class PlayerController : MonoBehaviour, IHealthSystem
     public void Death()
     {
         playerAnimator.SetTrigger("Death");
+        ChangeState(PlayerState.DEAD);
+    }
+
+    void ChangeState(PlayerState newState)
+    {
+        currentState = newState;
+        switch(currentState)
+        {
+            case PlayerState.DEAD:
+                character.detectCollisions = false;
+                //call death effect
+            break;
+        }
     }
 
     #region NEW INPUT SYSTEM
@@ -286,38 +312,38 @@ public class PlayerController : MonoBehaviour, IHealthSystem
 
     public void OnAttack1(InputAction.CallbackContext value)
     {
-        if(value.started) { Attack1(); }
+        if(value.started && currentState != PlayerState.DEAD) { Attack1(); }
     }
 
     public void OnAttack2(InputAction.CallbackContext value)
     {
-        if(value.started) { Attack2(); ActivePower(); }
+        if(value.started && currentState != PlayerState.DEAD) { Attack2(); }
     }
 
     public void OnFocus(InputAction.CallbackContext value)
     {
-        if(value.started) { SetTarget(); }
+        if(value.started && currentState != PlayerState.DEAD) { SetTarget(); }
     }
 
     public void OnDefend(InputAction.CallbackContext value)
     {
-        if(value.started) { Defend(); }
-        if(value.canceled) { ReleaseDefend(); }
+        if(value.started && currentState != PlayerState.DEAD) { Defend(); }
+        if(value.canceled && currentState != PlayerState.DEAD) { ReleaseDefend(); }
     }
 
     public void OnInventory(InputAction.CallbackContext value)
     {
-        if(value.started) { }
+        if(value.started && currentState != PlayerState.DEAD) { }
     }
 
     public void OnInteract(InputAction.CallbackContext value)
     {
-        if(value.started){ Interact(); }
+        if(value.started && currentState != PlayerState.DEAD){ Interact(); ActivePower(); }
     }
 
     public void OnPause(InputAction.CallbackContext value)
     {
-        if(value.started) { }
+        if(value.started && currentState != PlayerState.DEAD) { }
     }
 
     #endregion

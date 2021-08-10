@@ -15,12 +15,20 @@ public class PlayerCheckCollision : MonoBehaviour
     {
         if(other.gameObject.tag == "EnemyHit")
         {
-            MaxMinDamage shot = other.gameObject.GetComponent<MaxMinDamage>();
-            player.GetHit(Random.Range(shot.minDamage, shot.maxDamage));
-            if(shot.isDestructableOnCollision)
+            if(player.currentState == PlayerState.ALIVE)
+            {
+                MaxMinDamage shot = other.gameObject.GetComponent<MaxMinDamage>();
+                player.GetHit(Random.Range(shot.minDamage, shot.maxDamage));
+                if(shot.isDestructableOnCollision)
+                {
+                    Destroy(other.gameObject);
+                }
+            }
+            else
             {
                 Destroy(other.gameObject);
             }
+            
         } 
     }
 }

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_Dissolve_Dissolve_Metallic
+  m_Name: EnemyDissolve
   m_Shader: {fileID: -6465566751694194690, guid: 2c6e52535f17dfc4b8e0bb3d1e91aea4,
     type: 3}
   m_ShaderKeywords: 
@@ -26,23 +26,27 @@ Material:
         m_Texture: {fileID: 2800000, guid: 607d064242915a040b685a36ec2dfafd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 2800000, guid: 51767c0b80b46dd45a543f46589dd38d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _NormalMap:
         m_Texture: {fileID: 2800000, guid: 620e8c58fda860b4e98796884c1c761a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _R_Metallic_G_Occulsion_A_Smoothness:
-        m_Texture: {fileID: 2800000, guid: 0e80b0523ac75d04c9750f18984ba3ed, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Dissolve: 0
     - _EdgeColorIntensity: 1
     - _EdgeWidth: 0.07
-    - _Metallic: 0.48
+    - _Metallic: 0.28
     - _NoiseScale: 63.48
     - _NormalScale: 1
-    - _OcclusionStrength: 0
-    - _Smoothness: 1
+    - _OcclusionStrength: 1
+    - _Smoothness: 0.39
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _EdgeColor: {r: 1.4240837, g: 0, b: 3.9999995, a: 0}

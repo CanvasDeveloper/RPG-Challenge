@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class DamageText : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        GetComponent<Rigidbody>().AddForce(new Vector3(40f, 50f, 0f));
+        Destroy(gameObject, 4f);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        transform.rotation = Quaternion.Euler(0f, Camera.main.transform.eulerAngles.y, 0f);    
     }
 }
