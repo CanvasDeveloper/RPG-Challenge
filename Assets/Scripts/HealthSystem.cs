@@ -34,7 +34,7 @@ public class HealthSystem : MonoBehaviour
         else
         {
             GameObject temp = Instantiate(damageTxt, spawnLetter.position, Quaternion.identity);
-            temp.GetComponent<TextMeshProUGUI>().text = damage.ToString();
+            temp.GetComponent<TMP_Text>().text = damage.ToString();
         }
     }
 

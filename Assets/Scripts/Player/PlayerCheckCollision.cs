@@ -10,13 +10,17 @@ public class PlayerCheckCollision : MonoBehaviour
     {
         player = GetComponent<PlayerController>();
     }
-    private void OnCollisionEnter(Collision other)
+
+    private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "EnemyHit")
         {
             MaxMinDamage shot = other.gameObject.GetComponent<MaxMinDamage>();
             player.GetHit(Random.Range(shot.minDamage, shot.maxDamage));
-            Destroy(other.gameObject);
-        }    
+            if(shot.isDestructableOnCollision)
+            {
+                Destroy(other.gameObject);
+            }
+        } 
     }
 }

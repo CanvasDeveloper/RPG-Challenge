@@ -74,15 +74,31 @@ public class PlayerController : MonoBehaviour, IHealthSystem
 
     void Move()
     {   
-        Vector3 movement = transform.right * inputMove.x + transform.forward * inputMove.y;
-        character.Move(movement * stepSpeed * Time.deltaTime);
+        if(!isLookAtTarget)
+        {
+            Vector3 movement = transform.forward * inputMove.magnitude;
+            character.Move(movement * stepSpeed * Time.deltaTime);
+        }
+        else
+        {
+            Vector3 movement = transform.right * inputMove.x + transform.forward * inputMove.y;
+            character.Move(movement * stepSpeed * Time.deltaTime); //carangueja sksks
+        }
     }
 
     void Rotate()
     {
-        if(!isLookAtTarget && inputMove.y > 0.7f)
+        if(!isLookAtTarget)
         {
-            RotateToForwardCam(turnSpeed);
+            float targetAngle = Mathf.Atan2(inputMove.x, inputMove.y) * Mathf.Rad2Deg + mainCamera.transform.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSpeed, 0.1f);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+            //if(inputMove.y > 0.7f)
+            //{
+            //    RotateToForwardCam(turnSpeed); //Faz girar para frente
+            //}
+            
         }
         else if(target != null)
         {
@@ -92,7 +108,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
         }
     }
 
-    void RotateToForwardCam(float rotSpeed)
+    void RotateToForwardCam(float rotSpeed) //rotaciona para camera
     {
         float yawCam = mainCamera.transform.eulerAngles.y;
         transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(0, yawCam, 0), rotSpeed * Time.deltaTime);
@@ -227,11 +243,18 @@ public class PlayerController : MonoBehaviour, IHealthSystem
 
     #endregion
 
-    void Defend(bool def)
+    void Defend()
     {
-        isDefending = def;
+        isDefending = true;
         playerAnimator.SetBool("isDefend", isDefending);
     }
+
+    void ReleaseDefend()
+    {
+        isDefending = false;
+        playerAnimator.SetBool("isDefend", isDefending);
+        SetShieldCollisor(false);
+    }   
 
     public void SetShieldCollisor(bool enabled) //called by animator
     {
@@ -245,6 +268,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
 
     public void GetHit(int damage)
     {
+        playerAnimator.SetTrigger("GetHit");
         healthSystem.Damage(damage);
     }
 
@@ -277,8 +301,8 @@ public class PlayerController : MonoBehaviour, IHealthSystem
 
     public void OnDefend(InputAction.CallbackContext value)
     {
-        if(value.started) { Defend(true); }
-        else if(value.canceled) { Defend(false); }
+        if(value.started) { Defend(); }
+        if(value.canceled) { ReleaseDefend(); }
     }
 
     public void OnInventory(InputAction.CallbackContext value)

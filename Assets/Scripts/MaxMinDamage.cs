@@ -6,4 +6,5 @@ public class MaxMinDamage : MonoBehaviour
 {
     public int minDamage = 5;
     public int maxDamage = 10;
+    public bool isDestructableOnCollision = true;
 }
