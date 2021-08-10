@@ -31,11 +31,20 @@ public class PlayerController : MonoBehaviour, IHealthSystem
     private bool isAttacking;
     private bool isDefending;
 
-    [Header("Player Power")]
+    [Header("Player Power Particles")]
     [SerializeField] private ParticleSystem fireEffectParticle;
     [SerializeField] private ParticleSystem fireSparklesParticle;
+    [SerializeField] private ParticleSystem attack1SpearParticle;
+
+    [Header("Player Spawn Particles")]
+    [SerializeField] private GameObject attack1ParticlePrefab;
+
+    [Header("Player Power Position")]
+    [SerializeField] private Transform attackOneEffectSpearPoint;
     [SerializeField] private Transform attackOnePoint;
     [SerializeField] private Transform attackTwoPoint;
+
+    [Header("Player Power Skin Effect")]
     [SerializeField] private SkinnedMeshRenderer playerMesh;
     [SerializeField] private bool isMage;
 
@@ -171,6 +180,20 @@ public class PlayerController : MonoBehaviour, IHealthSystem
         {
             isAttacking = true;
             playerAnimator.SetTrigger("Attack1");
+
+            if(isMage)
+            {
+                fireEffectParticle.Play();
+                if(target != null)
+                {
+                    Instantiate(attack1ParticlePrefab, target.position, Quaternion.identity);
+                }
+                else
+                {
+                    Instantiate(attack1ParticlePrefab, attackOnePoint.position, Quaternion.identity);
+                }
+                
+            }
         }
     }
 

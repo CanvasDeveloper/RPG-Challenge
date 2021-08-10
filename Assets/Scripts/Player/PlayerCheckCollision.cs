@@ -14,7 +14,7 @@ public class PlayerCheckCollision : MonoBehaviour
     {
         if(other.gameObject.tag == "EnemyHit")
         {
-            ShotScript shot = other.gameObject.GetComponent<ShotScript>();
+            MaxMinDamage shot = other.gameObject.GetComponent<MaxMinDamage>();
             player.GetHit(Random.Range(shot.minDamage, shot.maxDamage));
             Destroy(other.gameObject);
         }    

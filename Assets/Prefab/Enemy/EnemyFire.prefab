@@ -4658,9 +4658,11 @@ GameObject:
   - component: {fileID: 5544097400022744353}
   - component: {fileID: 4113037247807632657}
   - component: {fileID: 6396079089987857597}
+  - component: {fileID: 4705760558286360577}
+  - component: {fileID: 6638875437186104774}
   m_Layer: 0
   m_Name: EnemyFire
-  m_TagString: PlayerMageHit
+  m_TagString: EnemyHit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9328,3 +9330,33 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &4705760558286360577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544097400042003943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3133e92886f8f468bcceaeb30789db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxMinDamage: {fileID: 0}
+  timeToDestroy: 5
+  particlePrefab: {fileID: 1979387580501083331, guid: 7bf975d8be3723c449b1417d7ed6385a,
+    type: 3}
+--- !u!114 &6638875437186104774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5544097400042003943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c95455db985f370418e2cd40abbf5512, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDamage: 5
+  maxDamage: 10

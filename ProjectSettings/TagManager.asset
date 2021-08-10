@@ -9,6 +9,8 @@ TagManager:
   - FxTemporaire
   - Ground
   - PlayerMageHit
+  - EnemyHit
+  - Enemy
   layers:
   - Default
   - TransparentFX
