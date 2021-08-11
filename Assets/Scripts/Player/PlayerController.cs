@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
-
 public enum PlayerState
 {
     ALIVE, DEAD
 }
-
 
 [RequireComponent(typeof(ShotSystem))]
 [RequireComponent(typeof(HealthSystem))]
@@ -17,14 +15,13 @@ public class PlayerController : MonoBehaviour, IHealthSystem
     private Camera mainCamera;
     private CharacterController character;
     private Animator playerAnimator;
-    private PlayerAimCheckCollision aimCheckCollision;
+    private RayCastCheckTarget rayCastCheckTarget;
     private ShotSystem shotSystem;
     private HealthSystem healthSystem;
 
     [Header("Player Settings")]
     public PlayerState currentState;
     [SerializeField]private BoxCollider shieldCollider;
-    [SerializeField]private float gravity = -9.81f;
     [SerializeField]private float stepSpeed;
     [SerializeField]private float turnSpeed = 15f;
     [SerializeField]private float delayAttackOneSpearEffect = 0.5f;
@@ -62,7 +59,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
     {
         character = GetComponent<CharacterController>();
         playerAnimator = GetComponent<Animator>();
-        aimCheckCollision = GetComponentInChildren<PlayerAimCheckCollision>();
+        rayCastCheckTarget = GetComponentInChildren<RayCastCheckTarget>();
         shotSystem = GetComponent<ShotSystem>();
         healthSystem = GetComponent<HealthSystem>();
 
@@ -80,7 +77,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
         {
             Move();
             Rotate();
-            Animations();
+            MoveAnimation();
             ResetTarget();
         }
     }
@@ -125,7 +122,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
     {
         if(!character.isGrounded)
         {
-            character.Move(new Vector3(0, gravity, 0));
+            character.Move(new Vector3(0, Physics.gravity.y * Time.fixedDeltaTime, 0));
         }
     }
 
@@ -140,7 +137,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
         }
     }
 
-    void Animations()
+    void MoveAnimation()
     {
         isWalking = inputMove.magnitude > 0.1f;
         playerAnimator.SetBool("isWalk", isWalking);
@@ -162,10 +159,10 @@ public class PlayerController : MonoBehaviour, IHealthSystem
         {
             RotateToForwardCam(15f);
 
-            if(aimCheckCollision.target != null)
+            if(rayCastCheckTarget.target != null)
             {
                 isLookAtTarget = true;
-                target = aimCheckCollision.target;
+                target = rayCastCheckTarget.target;
                 enemyTargetState = target.GetComponent<EnemyStateController>();
                 cinemachineVirtualCamera.gameObject.SetActive(true);
                 cinemachineVirtualCamera.LookAt = target.transform;
@@ -190,7 +187,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
 
     void ResetTarget()
     {
-        if(aimCheckCollision.target == null && cinemachineVirtualCamera.LookAt != defaultTarget)
+        if(rayCastCheckTarget.target == null && cinemachineVirtualCamera.LookAt != defaultTarget)
         {
             DisableTarget();
         }

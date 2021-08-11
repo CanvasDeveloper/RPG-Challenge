@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum EnemyState
 {
-    PATROL, ATTACK, DEAD
+    IDLE, PATROL, CHASE, ATTACK, VICTORY, DEAD
 }
 
 public class EnemyStateController : MonoBehaviour

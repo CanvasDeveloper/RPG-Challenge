@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAimCheckCollision : MonoBehaviour
-{   
-    private PlayerController _PlayerController;
-
+public class RayCastCheckTarget : MonoBehaviour
+{
     [SerializeField]private LayerMask capsuleMask;
     [SerializeField]private Transform[] capsulePoints;
     [SerializeField]private float capsuleRadius;
@@ -13,6 +11,7 @@ public class PlayerAimCheckCollision : MonoBehaviour
     [SerializeField] private float maxDistanceRay = 5f;
     
     [SerializeField] private float offsetY;
+    [SerializeField] int targetLayer;
     public Transform target;
     private RaycastHit hit;
 
@@ -24,7 +23,7 @@ public class PlayerAimCheckCollision : MonoBehaviour
         {
             foreach(Collider c in colliders)
             {
-                if(c.gameObject.layer == 10)
+                if(c.gameObject.layer == targetLayer)
                 {
                     Vector3 dir = c.transform.position - capsulePoints[0].position;
                     dir.Set(dir.x, dir.y + offsetY, dir.z);
@@ -34,7 +33,7 @@ public class PlayerAimCheckCollision : MonoBehaviour
                     {
                         Debug.DrawRay(capsulePoints[0].position, dir * maxDistanceRay, Color.red, 0.1f);
 
-                        if(hit.collider.gameObject.layer == 10)
+                        if(hit.collider.gameObject.layer == targetLayer)
                         {
                             target = hit.transform;
                         }
