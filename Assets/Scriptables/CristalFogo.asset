@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f2a2b4bc3f44943a893e57324bed0b, type: 3}
+  m_Name: CristalFogo
+  m_EditorClassIdentifier: 
+  itemIcon: {fileID: 0}
+  itemName: Cristal De Fogo
+  description: "Um cristal misterioso, que d\xE1 ao usu\xE1rio o poder de controlar
+    o elemento do fogo, nele est\xE1 escrito \"Gl\xF3ria ao sol!\"."
+  value: 1
+  isKeyItem: 1

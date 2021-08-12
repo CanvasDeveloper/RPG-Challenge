@@ -11,6 +11,7 @@ TagManager:
   - PlayerMageHit
   - EnemyHit
   - Enemy
+  - Collectable
   layers:
   - Default
   - TransparentFX

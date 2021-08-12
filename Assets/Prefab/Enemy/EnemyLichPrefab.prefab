@@ -436,7 +436,7 @@ MonoBehaviour:
   - {fileID: 7386159908951586528}
   capsuleRadius: 4.5
   colliders: []
-  maxDistanceRay: 20
+  maxDistanceRay: 10
   offsetY: 1
   targetLayer: 8
   target: {fileID: 0}

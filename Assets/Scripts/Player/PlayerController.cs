@@ -64,10 +64,8 @@ public class PlayerController : MonoBehaviour, IHealthSystem
         healthSystem = GetComponent<HealthSystem>();
 
         SetShieldCollisor(false);
-        cinemachineVirtualCamera.LookAt = defaultTarget;
-
-        Cursor.lockState = CursorLockMode.Locked;
         mainCamera = Camera.main;
+        cinemachineVirtualCamera.LookAt = defaultTarget;
     }
 
     private void Update() 
@@ -309,11 +307,13 @@ public class PlayerController : MonoBehaviour, IHealthSystem
 
     public void OnAttack1(InputAction.CallbackContext value)
     {
+        if(GameController.Instance.currentState == GameState.PAUSE) { return; }
         if(value.started && currentState != PlayerState.DEAD) { Attack1(); }
     }
 
     public void OnAttack2(InputAction.CallbackContext value)
     {
+        if(GameController.Instance.currentState == GameState.PAUSE) { return; }
         if(value.started && currentState != PlayerState.DEAD) { Attack2(); }
     }
 
@@ -330,7 +330,8 @@ public class PlayerController : MonoBehaviour, IHealthSystem
 
     public void OnInventory(InputAction.CallbackContext value)
     {
-        if(value.started && currentState != PlayerState.DEAD) { }
+        if(GameController.Instance.currentState == GameState.PAUSE) { return; }
+        if(value.started && currentState != PlayerState.DEAD) { Inventory.Instance.Open(); }
     }
 
     public void OnInteract(InputAction.CallbackContext value)
@@ -340,7 +341,8 @@ public class PlayerController : MonoBehaviour, IHealthSystem
 
     public void OnPause(InputAction.CallbackContext value)
     {
-        if(value.started && currentState != PlayerState.DEAD) { }
+        if(GameController.Instance.currentState == GameState.PAUSE) { return; }
+        if(value.started && currentState != PlayerState.DEAD) { UIController.Instance.OpenPause(); }
     }
 
     #endregion

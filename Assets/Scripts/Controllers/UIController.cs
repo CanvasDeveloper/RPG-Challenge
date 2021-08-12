@@ -9,6 +9,7 @@ public class UIController : MonoBehaviour
 
     private Camera cam;
     [SerializeField] private Image imgAim;
+    [SerializeField]private GameObject pausePanel;
 
     private void Awake()
     {
@@ -30,5 +31,17 @@ public class UIController : MonoBehaviour
     public void SetTargetHUD()
     {
         imgAim.enabled = !imgAim.enabled;
+    }
+
+    public void OpenPause()
+    {
+        pausePanel.SetActive(true);
+        GameController.Instance.ChangeGameState(GameState.PAUSE);
+    }
+
+    public void ClosePause()
+    {
+        pausePanel.SetActive(false);
+        GameController.Instance.ChangeGameState(GameState.GAMEPLAY);
     }
 }

@@ -32,7 +32,6 @@ public class EnemyController : MonoBehaviour, IHealthSystem
     private int idWaypoint;
     private Transform target;
     private Vector3 playerPos;
-    private float turnSpeed;
 
     [Header("Enemy VFX")]
     [SerializeField]private ParticleSystem darkEffectParticle;
@@ -46,6 +45,7 @@ public class EnemyController : MonoBehaviour, IHealthSystem
         healthSystem = GetComponent<HealthSystem>();
         animator = GetComponent<Animator>();
         character = GetComponent<CharacterController>();
+        rayCastCheckTarget = GetComponentInChildren<RayCastCheckTarget>();
         agent = GetComponent<NavMeshAgent>();
 
         target = waypoints[idWaypoint];
@@ -69,7 +69,7 @@ public class EnemyController : MonoBehaviour, IHealthSystem
             StartCoroutine(Dead());
         }
 
-        if(!isDead && target != null && enemyState.currentState != EnemyState.CHASE)
+        if(!isDead && rayCastCheckTarget.target != null && enemyState.currentState != EnemyState.CHASE)
         {
             ChangeState(EnemyState.CHASE);
         }
