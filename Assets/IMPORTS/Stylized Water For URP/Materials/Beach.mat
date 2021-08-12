@@ -72,7 +72,7 @@ Material:
     m_Floats:
     - FOAM_SHADOWS: 1
     - INTERSECTION_EFFECTS: 1
-    - SHORE_MOVEMENT: 0
+    - SHORE_MOVEMENT: 1
     - SURFACE_FOAM: 0
     - WATER_LIGHTING: 1
     - WORLD_SPACE_UV: 1
@@ -95,7 +95,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _IntersectionFoamBlend: 1
-    - _IntersectionFoamDepth: 0.6
+    - _IntersectionFoamDepth: 1.2
     - _IntersectionFoamScale: 0.19
     - _IntersectionFoamShadowProjection: 4.6
     - _IntersectionWaterBlend: 0
@@ -108,7 +108,7 @@ Material:
     - _PlanarReflectionStrength: 0.82
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RefractionStrength: 0.022
+    - _RefractionStrength: 0.1
     - _ShoreBlend: 1
     - _ShoreDepth: 0
     - _ShoreFade: 1
