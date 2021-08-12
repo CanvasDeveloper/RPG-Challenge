@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39f2a2b4bc3f44943a893e57324bed0b, type: 3}
   m_Name: FragmentoDeCristal
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 48f3fa1bcd4c1ce409280c15011c4598, type: 3}
   itemName: Fragmento de cristal do fogo
   description: "Um fragmento do cristal do fogo, voc\xEA pode sentir seu bolso esquentar,
     mas n\xE3o \xE9 poderoso o suficiente para manter a chama acessa."

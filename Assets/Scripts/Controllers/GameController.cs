@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance;
     public GameState currentState;
+    public Collectable cristalFireItem;
 
     private void Awake() {
         if(Instance == null) { Instance = this; DontDestroyOnLoad(gameObject); }

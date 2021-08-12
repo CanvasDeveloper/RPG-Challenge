@@ -8,8 +8,9 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory Instance;
     [SerializeField]private Slot[] slots;
+    [SerializeField]private Button primaryinventoryButton;
     [SerializeField]private GameObject inventoryPanel;
-    [SerializeField]private GameObject btnEquip;
+    [SerializeField]private GameObject equipWarning;
     [SerializeField]private GameObject detailPanel;
     [SerializeField]private Image itemImage;
     [SerializeField]private TextMeshProUGUI itemName;
@@ -23,6 +24,7 @@ public class Inventory : MonoBehaviour
     public void Open()
     {
         inventoryPanel.SetActive(true);
+        UIController.Instance.SetSelectedButton(primaryinventoryButton);
         EnableAllSlots();
         DisableEmptySlots();
         DisableDetailPanel();
@@ -41,7 +43,7 @@ public class Inventory : MonoBehaviour
         itemImage.sprite = currentItem.itemIcon;
         itemName.text = currentItem.itemName;
         itemDescription.text = currentItem.description;
-        btnEquip.SetActive(!currentItem.isKeyItem);
+        equipWarning.SetActive(!currentItem.isKeyItem);
     }
 
     public void DisableDetailPanel()
@@ -50,7 +52,25 @@ public class Inventory : MonoBehaviour
         itemImage.sprite = null;
         itemName.text = "";
         itemDescription.text = "";
-        btnEquip.SetActive(false);
+        equipWarning.SetActive(false);
+    }
+
+    void UnequipAllItems()
+    {
+        foreach(Slot s in slots)
+        {
+            if(s.slotItem != null)
+            {
+                s.slotItem.isEquipped = false;
+            }
+        }
+    }
+
+    public void EquipItem()
+    {
+        UnequipAllItems();
+        currentItem.isEquipped = true;
+        UpdateSlots();
     }
 
     #region  SLOTS
@@ -65,17 +85,27 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    void DisableAllSlots()
+    {
+        foreach(Slot s in slots)
+        {
+            s.gameObject.SetActive(false);
+        }
+    }
+
     public void EnableAllSlots()
     {
         foreach(Slot s in slots)
         {
             s.gameObject.SetActive(true);
         }
+
+        UpdateSlots();
     }
 
     public void EnableKeyItensSlots()
     {
-        DisableEmptySlots();
+        DisableAllSlots();
 
         foreach(Slot s in slots)
         {
@@ -88,7 +118,7 @@ public class Inventory : MonoBehaviour
 
     public void EnableCollectablesSlots()
     {
-        DisableEmptySlots();
+        DisableAllSlots();
 
         foreach(Slot s in slots)
         {
@@ -104,6 +134,11 @@ public class Inventory : MonoBehaviour
         {
             s.LoadSlot();
         }
+    }
+
+    public bool isOpen()
+    {
+        return inventoryPanel.activeSelf;
     }
 
     #endregion
@@ -130,6 +165,7 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(Collectable item)
     {
+        UIController.Instance.TakeItemHUD(item);
         if(item.isKeyItem)
         {
             AddItemInEmptySlot(item);

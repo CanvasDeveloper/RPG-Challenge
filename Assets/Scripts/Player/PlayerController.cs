@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
         }
     }
 
-    void ActivePower()
+    public void ActivePower()
     {
         if(!isMage)
         {
@@ -330,19 +330,25 @@ public class PlayerController : MonoBehaviour, IHealthSystem
 
     public void OnInventory(InputAction.CallbackContext value)
     {
-        if(GameController.Instance.currentState == GameState.PAUSE) { return; }
-        if(value.started && currentState != PlayerState.DEAD) { Inventory.Instance.Open(); }
+        if(value.started && currentState != PlayerState.DEAD)
+        {
+            if(Inventory.Instance.isOpen()) { Inventory.Instance.Close(); }
+            else if(!UIController.Instance.isPause()){ Inventory.Instance.Open(); }
+        }
     }
 
     public void OnInteract(InputAction.CallbackContext value)
     {
-        if(value.started && currentState != PlayerState.DEAD){ Interact(); ActivePower(); }
+        if(value.started && currentState != PlayerState.DEAD){ Interact(); }
     }
 
     public void OnPause(InputAction.CallbackContext value)
     {
-        if(GameController.Instance.currentState == GameState.PAUSE) { return; }
-        if(value.started && currentState != PlayerState.DEAD) { UIController.Instance.OpenPause(); }
+        if(value.started && currentState != PlayerState.DEAD)
+        { 
+            if(UIController.Instance.isPause()) {UIController.Instance.ClosePause(); }
+            else if(!Inventory.Instance.isOpen()){ UIController.Instance.OpenPause();} 
+        }
     }
 
     #endregion

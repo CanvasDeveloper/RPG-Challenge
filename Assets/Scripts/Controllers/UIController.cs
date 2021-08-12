@@ -9,7 +9,10 @@ public class UIController : MonoBehaviour
 
     private Camera cam;
     [SerializeField] private Image imgAim;
-    [SerializeField]private GameObject pausePanel;
+    [SerializeField]private GameObject takeItemPrefab;
+    [SerializeField]private Transform takeItemContainer;
+    public GameObject pausePanel;
+    [SerializeField]private Button primaryPauseButton;
 
     private void Awake()
     {
@@ -28,6 +31,12 @@ public class UIController : MonoBehaviour
         cam = Camera.main;
     }
 
+    public void TakeItemHUD(Collectable item)
+    {
+        TakeItemNotification temp = Instantiate(takeItemPrefab, takeItemContainer).GetComponent<TakeItemNotification>();
+        temp.UpdateNotification(item.itemIcon, item.itemName);
+    }
+
     public void SetTargetHUD()
     {
         imgAim.enabled = !imgAim.enabled;
@@ -36,7 +45,18 @@ public class UIController : MonoBehaviour
     public void OpenPause()
     {
         pausePanel.SetActive(true);
+        SetSelectedButton(primaryPauseButton);
         GameController.Instance.ChangeGameState(GameState.PAUSE);
+    }
+
+    public void SetSelectedButton(Button button)
+    {
+        button.Select();
+    }
+
+    public bool isPause()
+    {
+        return pausePanel.activeSelf;
     }
 
     public void ClosePause()

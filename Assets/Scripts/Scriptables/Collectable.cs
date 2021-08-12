@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Scriptables/Collectable", fileName = "new collectable")]
 public class Collectable : ScriptableObject
@@ -10,5 +8,6 @@ public class Collectable : ScriptableObject
     [TextArea]
     public string description;
     public int value;
+    public bool isEquipped;
     public bool isKeyItem;
 }
