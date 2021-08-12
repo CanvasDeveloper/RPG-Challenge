@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum GameState
 {
-    MENU, GAMEPLAY, PAUSE
+    MENU, GAMEPLAY, PAUSE, GAMEOVER
 }
 
 public class GameController : MonoBehaviour
@@ -33,6 +33,10 @@ public class GameController : MonoBehaviour
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
                 Time.timeScale = 0;
+            break;
+
+            case GameState.GAMEOVER:
+
             break;
         }
     }
