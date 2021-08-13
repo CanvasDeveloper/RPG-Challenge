@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIController : MonoBehaviour
 {
@@ -15,6 +16,11 @@ public class UIController : MonoBehaviour
     [SerializeField]private GameObject pausePanel;
     [SerializeField]private GameObject optionsPanel;
     [SerializeField]private GameObject gameOverPanel;
+    [Header("Tutorial")]
+    [SerializeField]private string firstTutorialString;
+    [SerializeField]private GameObject tutorialPanel;
+    [SerializeField]private TextMeshProUGUI txtTutorial;
+    [SerializeField]private bool hasTutorial;
     [SerializeField]private Button primaryPauseButton;
     [SerializeField]private Button primaryGameoverButton;
 
@@ -33,6 +39,25 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         cam = Camera.main;
+        if(hasTutorial)
+        {
+            OpenTutorialPanel(firstTutorialString);
+        }
+    }
+
+    public void OpenTutorialPanel(string text)
+    {
+        tutorialPanel.SetActive(true);
+        txtTutorial.text = text;
+        StopCoroutine(HideTutorialPanel());
+        StartCoroutine(HideTutorialPanel());
+    }
+
+    IEnumerator HideTutorialPanel()
+    {
+        yield return new WaitForSeconds(7f);
+        tutorialPanel.SetActive(false);
+        txtTutorial.text = "";
     }
 
     public void TakeItemHUD(Collectable item)

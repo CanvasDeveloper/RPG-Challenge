@@ -7,6 +7,7 @@ public class Collectable : ScriptableObject
     public string itemName;
     [TextArea]
     public string description;
+    public int healthRecovery = 15;
     public int value;
     public bool isEquipped;
     public bool isKeyItem;

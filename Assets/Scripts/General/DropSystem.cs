@@ -1,18 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DropSystem : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]private GameObject[] dropItensPrefab;
+    [SerializeField]private Transform dropPoint;
+    [SerializeField]private float dropChance;
 
-    // Update is called once per frame
-    void Update()
+    public void Drop()
     {
-        
+        if(Random.Range(0f, 100f) <= dropChance)
+        {
+            Instantiate(dropItensPrefab[Random.Range(0, dropItensPrefab.Length)], dropPoint.position, Quaternion.identity);
+        }
     }
 }

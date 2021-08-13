@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
     [Header("Player Settings")]
     public PlayerState currentState;
     [SerializeField]private BoxCollider shieldCollider;
+    [SerializeField]private BoxCollider normalAttackCollider;
     [SerializeField]private float stepSpeed;
     [SerializeField]private float turnSpeed = 15f;
     [SerializeField]private float delayAttackOneSpearEffect = 0.5f;
@@ -39,10 +40,11 @@ public class PlayerController : MonoBehaviour, IHealthSystem
     private bool isAttacking;
     private bool isDefending;
 
-    [Header("Player Power Particles")]
+    [Header("Player Particles")]
     [SerializeField] private ParticleSystem fireEffectParticle;
     [SerializeField] private ParticleSystem fireSparklesParticle;
     [SerializeField] private ParticleSystem attack1SpearParticle;
+    [SerializeField] private ParticleSystem healthParticle;
 
     [Header("Player Spawn Particles")]
     [SerializeField] private GameObject attack1ParticlePrefab;
@@ -64,6 +66,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
         healthSystem = GetComponent<HealthSystem>();
 
         SetShieldCollisor(false);
+        normalAttackCollider.enabled = false;
         mainCamera = Camera.main;
         cinemachineVirtualCamera.LookAt = defaultTarget;
     }
@@ -216,7 +219,6 @@ public class PlayerController : MonoBehaviour, IHealthSystem
                 {
                     StartCoroutine(InstantiateAttackDelay(attackOnePoint.position));
                 }
-                
             }
         }
     }
@@ -241,7 +243,19 @@ public class PlayerController : MonoBehaviour, IHealthSystem
                 fireEffectParticle.Play();
                 shotSystem.Fire(attackTwoPoint);
             }
+            else
+            {
+                StartCoroutine(NormalAttack());
+            }
         }
+    }
+
+    IEnumerator NormalAttack()
+    {
+        yield return new WaitForSeconds(0.25f);
+        normalAttackCollider.enabled = true;
+        yield return new WaitForSeconds(0.15f);
+        normalAttackCollider.enabled = false;
     }
 
     public void FinishAttack() //called by animator on exit animation
@@ -271,7 +285,12 @@ public class PlayerController : MonoBehaviour, IHealthSystem
 
     void UseItem()
     {
-        
+        if(Inventory.Instance.equippedItem != null)
+        {
+            healthSystem.RecoveryHealth(Inventory.Instance.equippedItem.healthRecovery);
+            Inventory.Instance.SubtractValue();
+            healthParticle.Play();
+        }
     }
 
     void Interact()

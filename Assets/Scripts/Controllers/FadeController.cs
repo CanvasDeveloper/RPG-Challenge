@@ -59,6 +59,7 @@ public class FadeController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
         anim.SetTrigger("fade");
         yield return new WaitUntil(() => isFadeCompleted);
+        GameController.Instance.ChangeGameState(GameState.GAMEPLAY);
     }
 
     IEnumerator ReloadSceneFade()
@@ -69,6 +70,7 @@ public class FadeController : MonoBehaviour
         yield return new WaitUntil(() => isFadeCompleted);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         anim.SetTrigger("fade");
+        GameController.Instance.ChangeGameState(GameState.GAMEPLAY);
     }
 
     IEnumerator ChangeSceneFade(string name)
@@ -79,6 +81,10 @@ public class FadeController : MonoBehaviour
         yield return new WaitUntil(() => isFadeCompleted);
         SceneManager.LoadScene(name);
         anim.SetTrigger("fade");
+        if(name == "title")
+        {
+            GameController.Instance.ChangeGameState(GameState.MENU);
+        }
     }
 
     IEnumerator ExitFade()

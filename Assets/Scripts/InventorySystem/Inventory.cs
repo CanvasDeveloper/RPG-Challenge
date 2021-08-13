@@ -16,9 +16,10 @@ public class Inventory : MonoBehaviour
     [SerializeField]private TextMeshProUGUI itemName;
     [SerializeField]private TextMeshProUGUI itemDescription;
     private Collectable currentItem;
+    public Collectable equippedItem;
     private void Awake()
     {
-        if(Instance == null) { Instance = this; DontDestroyOnLoad(gameObject);}
+        if(Instance == null) { Instance = this; DontDestroyOnLoad(transform.parent.gameObject);}
         else { Destroy(gameObject); }
     }
 
@@ -67,10 +68,38 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void SubtractValue()
+    {
+        equippedItem.value --;
+        if(equippedItem.value <= 0)
+        {
+            equippedItem.value = 0;
+
+            RemoveItem(equippedItem);
+
+            equippedItem = null;
+
+        }
+    }
+
+    public void RemoveItem(Collectable item)
+    {
+        foreach(Slot s in slots)
+        {
+            if(s.slotItem == item)
+            {
+                s.slotItem = null;
+                DisableEmptySlots();
+                break;
+            }
+        }
+    }
+
     public void EquipItem()
     {
         UnequipAllItems();
         currentItem.isEquipped = true;
+        equippedItem = currentItem;
         UpdateSlots();
     }
 
