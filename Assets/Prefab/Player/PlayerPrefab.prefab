@@ -1475,7 +1475,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3713453056983474855}
-  m_LocalRotation: {x: 0.030789042, y: 0.0000000010748891, z: -3.31105e-11, w: 0.9995259}
+  m_LocalRotation: {x: 0.03078904, y: -0.0000000010748891, z: 3.3110497e-11, w: 0.9995259}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2299,6 +2299,21 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b39e47a1-c64b-4746-9b57-66bda710acf6
     m_ActionName: PlayerMap/Focus[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6202301009284066400}
+        m_MethodName: OnUseItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 929247c4-2a49-4a06-b256-dfaaf0af0ee3
+    m_ActionName: PlayerMap/UseItem[/Keyboard/q]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerMap
