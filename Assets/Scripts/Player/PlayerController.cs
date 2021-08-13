@@ -325,6 +325,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
             healthSystem.RecoveryHealth(Inventory.Instance.equippedItem.healthRecovery);
             Inventory.Instance.SubtractValue();
             healthParticle.Play();
+            UIController.Instance.UpdateHpBar(healthSystem.currentHealth , healthSystem.maxHealth);
         }
     }
 

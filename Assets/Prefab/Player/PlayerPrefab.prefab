@@ -595,7 +595,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3713453055502171861}
-  m_LocalRotation: {x: 0.073045336, y: 0.0000000042901043, z: -3.1421146e-10, w: 0.99732864}
+  m_LocalRotation: {x: 0.073045336, y: -0.0000000042901043, z: 3.1421146e-10, w: 0.99732864}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -908,7 +908,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3713453056561027966}
-  m_LocalRotation: {x: 0.11413951, y: -8.8237397e-16, z: -9.646054e-18, w: 0.99346477}
+  m_LocalRotation: {x: 0.114139505, y: 0.0000000074018893, z: -8.504056e-10, w: 0.99346477}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1475,7 +1475,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3713453056983474855}
-  m_LocalRotation: {x: 0.15561083, y: -0.000000008498392, z: 0.0000000013387499, w: 0.9878185}
+  m_LocalRotation: {x: 0.15561083, y: 0.00000000849839, z: -0.0000000013387496, w: 0.9878185}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2365,7 +2365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shotPrefab: {fileID: 1496536274344812230, guid: 2a7a93af577d2bc4c9b1d5c47b64172b,
     type: 3}
-  shotSpeed: 5
+  shotSpeed: 6
   shotDelay: 0.4
 --- !u!114 &6202301009284066406
 MonoBehaviour:
@@ -2379,7 +2379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 478a43d23a93d2847ad8f16d707880f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 50
   spawnLetter: {fileID: 3713453056145000121}
   damageTxt: {fileID: 4060886843664316287, guid: cd03f77e878d7fc4ba159e94a70664a4,
     type: 3}
