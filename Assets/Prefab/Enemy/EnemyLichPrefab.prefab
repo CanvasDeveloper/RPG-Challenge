@@ -436,7 +436,7 @@ MonoBehaviour:
   - {fileID: 7386159908951586528}
   capsuleRadius: 4.5
   colliders: []
-  maxDistanceRay: 10
+  maxDistanceRay: 17
   offsetY: 1
   targetLayer: 8
   target: {fileID: 0}
@@ -1359,6 +1359,7 @@ MonoBehaviour:
   spawnLetter: {fileID: 2076720974404081480}
   damageTxt: {fileID: 4060886843664316287, guid: cd03f77e878d7fc4ba159e94a70664a4,
     type: 3}
+  currentHealth: 0
 --- !u!114 &9051080782227914975
 MonoBehaviour:
   m_ObjectHideFlags: 0

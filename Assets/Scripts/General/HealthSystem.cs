@@ -12,10 +12,10 @@ public interface IHealthSystem
 //=== FOR SECURITY IMPLEMENT IHEALTHSYSTEM IN YOUR MAIN SCRIPT===
 public class HealthSystem : MonoBehaviour
 {
-    [SerializeField]private float maxHealth;
+    public float maxHealth;
     [SerializeField]private Transform spawnLetter;
     [SerializeField]private GameObject damageTxt;
-    private float currentHealth;
+    [HideInInspector]public float currentHealth;
 
     private void Start()
     {

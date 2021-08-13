@@ -18,7 +18,8 @@ public class Inventory : MonoBehaviour
     private Collectable currentItem;
     private void Awake()
     {
-        if(Instance == null) { Instance = this; }
+        if(Instance == null) { Instance = this; DontDestroyOnLoad(gameObject);}
+        else { Destroy(gameObject); }
     }
 
     public void Open()

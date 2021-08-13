@@ -269,6 +269,11 @@ public class PlayerController : MonoBehaviour, IHealthSystem
         shieldCollider.enabled = enabled;
     }
 
+    void UseItem()
+    {
+        
+    }
+
     void Interact()
     {
 
@@ -278,6 +283,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
     {
         playerAnimator.SetTrigger("GetHit");
         healthSystem.Damage(damage);
+        UIController.Instance.UpdateHpBar(healthSystem.currentHealth, healthSystem.maxHealth);
     }
 
     public void Death()
@@ -293,7 +299,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
         {
             case PlayerState.DEAD:
                 character.detectCollisions = false;
-                //call death effect
+                GameController.Instance.ChangeGameState(GameState.GAMEOVER);
             break;
         }
     }
@@ -335,6 +341,11 @@ public class PlayerController : MonoBehaviour, IHealthSystem
             if(Inventory.Instance.isOpen()) { Inventory.Instance.Close(); }
             else if(!UIController.Instance.isPause()){ Inventory.Instance.Open(); }
         }
+    }
+
+    public void OnUseItem(InputAction.CallbackContext value)
+    {
+        if(value.started) { UseItem(); }
     }
 
     public void OnInteract(InputAction.CallbackContext value)

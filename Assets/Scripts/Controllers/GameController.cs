@@ -36,8 +36,14 @@ public class GameController : MonoBehaviour
             break;
 
             case GameState.GAMEOVER:
-
+                StartCoroutine(DelayGameOver());
             break;
         }
+    }
+
+    IEnumerator DelayGameOver()
+    {
+        yield return new WaitForSeconds(3f);
+        UIController.Instance.OpenGameOver();
     }
 }

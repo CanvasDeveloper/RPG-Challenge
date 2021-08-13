@@ -23,6 +23,7 @@ public class EnemyController : MonoBehaviour, IHealthSystem
     [SerializeField]private Transform[] waypoints;
     bool isAttacking;
     bool isDead;
+    bool isVictory;
 
     [Header("NavMesh Agent Settings")]
     [SerializeField]private float patrolStopDistance = 0f;
@@ -63,15 +64,21 @@ public class EnemyController : MonoBehaviour, IHealthSystem
 
     void CheckState()
     {
-        if(isDead && enemyState.currentState != EnemyState.DEAD)
+        if(isDead && enemyState.currentState != EnemyState.DEAD && !isVictory)
         {
             enemyState.currentState = EnemyState.DEAD;
             StartCoroutine(Dead());
         }
 
-        if(!isDead && rayCastCheckTarget.target != null && enemyState.currentState != EnemyState.CHASE)
+        if(!isDead && rayCastCheckTarget.target != null && enemyState.currentState != EnemyState.CHASE && !isVictory)
         {
             ChangeState(EnemyState.CHASE);
+        }
+
+        if(!isVictory && EnemyDataBase.Instance.player.currentState == PlayerState.DEAD)
+        {
+            isVictory = true;
+            ChangeState(EnemyState.VICTORY);
         }
     }
 
@@ -178,6 +185,7 @@ public class EnemyController : MonoBehaviour, IHealthSystem
 
     IEnumerator Victory()
     {
+
         yield return null;
     }
 
