@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour, IHealthSystem
     private bool isWalking;
     private bool isAttacking;
     private bool isDefending;
+    private bool isVictory;
+    private bool isInteract;
 
     [Header("Player Particles")]
     [SerializeField] private ParticleSystem fireEffectParticle;
@@ -73,7 +75,10 @@ public class PlayerController : MonoBehaviour, IHealthSystem
         mainCamera = Camera.main;
         cinemachineVirtualCamera.LookAt = defaultTarget;
 
-        Inventory.Instance.CheckIfHaveMage();
+        if(Inventory.Instance.CheckIfHaveMage())
+        {
+            ActivePower();
+        }
     }
 
     private void Update() 
@@ -85,6 +90,31 @@ public class PlayerController : MonoBehaviour, IHealthSystem
             Rotate();
             MoveAnimation();
             ResetTarget();
+            CheckVictory();
+            CheckInteract();
+        }
+    }
+
+    void CheckVictory()
+    {
+        if(GameController.Instance.currentState == GameState.VICTORY && !isVictory)
+        {
+            isVictory = true;
+            playerAnimator.SetTrigger("Victory");
+        }
+    }
+
+    void CheckInteract()
+    {
+        if(isInteract && GameController.Instance.currentState == GameState.GAMEPLAY)
+        {
+            isInteract = false;
+        }
+        else if(!isInteract && GameController.Instance.currentState == GameState.DIALOG)
+        {
+            isInteract = true;
+            inputMove = Vector3.zero;
+            Move();
         }
     }
 
@@ -335,7 +365,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
 
     public void OnMovement(InputAction.CallbackContext value)
     {
-        if(GameController.Instance.currentState == GameState.GAMEPLAY)
+        if(GameController.Instance.currentState == GameState.GAMEPLAY && !isInteract)
         {
             inputMove = value.ReadValue<Vector2>().normalized;
         }

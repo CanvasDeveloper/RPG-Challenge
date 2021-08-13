@@ -39,6 +39,10 @@ public class ShotScript : MonoBehaviour
             case "Enemy":
             break;
 
+            case "Collectable":
+
+            break;
+
             default:
                 Destroy(this.gameObject);
             break;

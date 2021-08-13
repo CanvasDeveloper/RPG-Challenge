@@ -12,6 +12,6 @@ public class PreTitles : MonoBehaviour
     IEnumerator Delay()
     {
         yield return new WaitForSeconds(timeIntro);
-        FadeController.Instance.NextScene();
+        FadeController.Instance.NextSceneTitle();
     }
 }

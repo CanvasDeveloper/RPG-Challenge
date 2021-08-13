@@ -5,9 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scene/GAME/pre-title0.unity
     guid: 8d531534d7b2c2e4ca7265e2cec81b28
@@ -23,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/GAME/dungeon.unity
     guid: 0b16c96c6cdd7a1458821cf17582700a
+  - enabled: 1
+    path: Assets/Scene/GAME/dungeon 2.unity
+    guid: d01e518ab68e9e8428af96d2b6f92938
+  - enabled: 1
+    path: Assets/Scene/GAME/endGame.unity
+    guid: 18171dccf0f557644a481d40bb310160
   m_configObjects: {}

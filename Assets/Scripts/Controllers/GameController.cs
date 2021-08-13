@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum GameState
 {
-    MENU, GAMEPLAY, PAUSE, GAMEOVER, DIALOG
+    MENU, GAMEPLAY, PAUSE, GAMEOVER, DIALOG, VICTORY
 }
 
 public class GameController : MonoBehaviour
@@ -40,7 +40,12 @@ public class GameController : MonoBehaviour
             break;
 
             case GameState.DIALOG:
-                
+
+            break;
+
+            case GameState.VICTORY:
+                UIController.Instance.OpenVictoryPanel();
+                Time.timeScale = 0;
             break;
         }
     }

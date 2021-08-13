@@ -31,6 +31,9 @@ public class UIController : MonoBehaviour
     [Header("Craft")]
     public GameObject craftPanel;
 
+    [Header("Victory")]
+    [SerializeField]private GameObject victoryPanel;
+
     [SerializeField]private Button primaryPauseButton;
     [SerializeField]private Button primaryGameoverButton;
 
@@ -57,6 +60,7 @@ public class UIController : MonoBehaviour
 
     public void OpenDialogPanel(string name, string text)
     {
+        GameController.Instance.ChangeGameState(GameState.DIALOG);
         dialogPanel.SetActive(true);
         SetDialogText(name, text);
     }
@@ -72,12 +76,22 @@ public class UIController : MonoBehaviour
         return dialogPanel.activeSelf;
     }
 
+    public void Quit()
+    {
+        FadeController.Instance.Exit();
+    }
+
     public void CloseDialogPanel()
     {
         GameController.Instance.ChangeGameState(GameState.GAMEPLAY);
         dialogPanel.SetActive(false);
         txtNameNPC.text = "";
         txtDialog.text = "";
+    }
+
+    public void OpenVictoryPanel()
+    {
+        victoryPanel.SetActive(true);
     }
 
     public void OpenCraftPanel()
