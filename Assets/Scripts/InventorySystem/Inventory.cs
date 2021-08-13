@@ -23,6 +23,21 @@ public class Inventory : MonoBehaviour
         else { Destroy(gameObject); }
     }
 
+    public bool CheckIfHaveMage()
+    {
+        bool isMage = false;
+        foreach(Slot s in slots)
+        {
+            if(s.slotItem == GameController.Instance.cristalFireItem)
+            {
+               isMage = true;
+            }
+        }
+
+        return isMage;
+    }
+    
+
     public void Open()
     {
         inventoryPanel.SetActive(true);
@@ -68,18 +83,35 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public bool CheckItens(Collectable keyItem)
+    {
+        int counter = 0;
+        foreach(Slot s in slots)
+        {
+            if(s.slotItem == keyItem)
+            {
+                counter ++;
+            }
+        }
+        return counter >= 2;
+    }
+
     public void SubtractValue()
     {
-        equippedItem.value --;
-        if(equippedItem.value <= 0)
+        foreach(Slot s in slots)
         {
-            equippedItem.value = 0;
-
-            RemoveItem(equippedItem);
-
-            equippedItem = null;
-
+            if(s.slotItem == equippedItem)
+            {
+                s.currentValue--;
+                if(s.currentValue <= 0)
+                {
+                    s.ResetSlot();
+                    equippedItem = null;
+                }
+            }
         }
+
+        DisableEmptySlots();
     }
 
     public void RemoveItem(Collectable item)

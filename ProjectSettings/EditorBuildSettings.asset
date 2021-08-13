@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/GAME/gameplay.unity
     guid: 7b21d65b4b3628643970bb89c2060233
+  - enabled: 1
+    path: Assets/Scene/GAME/dungeon.unity
+    guid: 0b16c96c6cdd7a1458821cf17582700a
   m_configObjects: {}

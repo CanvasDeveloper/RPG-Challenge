@@ -29,6 +29,19 @@ public class PlayerCheckCollision : MonoBehaviour
                 Destroy(other.gameObject);
             }
             
-        } 
+        }
+
+        if(other.gameObject.tag == "Interaction")
+        {
+            player.interactionObject = other.GetComponent<Interaction>();
+        }
+    }
+
+    private void OnTriggerExit(Collider other) 
+    {
+        if(other.gameObject.tag == "Interaction")
+        {
+            player.interactionObject = null;
+        }
     }
 }

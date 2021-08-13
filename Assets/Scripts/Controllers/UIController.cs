@@ -16,11 +16,21 @@ public class UIController : MonoBehaviour
     [SerializeField]private GameObject pausePanel;
     [SerializeField]private GameObject optionsPanel;
     [SerializeField]private GameObject gameOverPanel;
+
+    [Header("Dialog")]
+    [SerializeField]private GameObject dialogPanel;
+    [SerializeField]private TextMeshProUGUI txtNameNPC;
+    [SerializeField]private TextMeshProUGUI txtDialog;
+    
     [Header("Tutorial")]
     [SerializeField]private string firstTutorialString;
     [SerializeField]private GameObject tutorialPanel;
     [SerializeField]private TextMeshProUGUI txtTutorial;
     [SerializeField]private bool hasTutorial;
+
+    [Header("Craft")]
+    public GameObject craftPanel;
+
     [SerializeField]private Button primaryPauseButton;
     [SerializeField]private Button primaryGameoverButton;
 
@@ -43,6 +53,37 @@ public class UIController : MonoBehaviour
         {
             OpenTutorialPanel(firstTutorialString);
         }
+    }
+
+    public void OpenDialogPanel(string name, string text)
+    {
+        dialogPanel.SetActive(true);
+        SetDialogText(name, text);
+    }
+
+    public void SetDialogText(string name, string text)
+    {
+        txtNameNPC.text = name;
+        txtDialog.text = text;
+    }
+
+    public bool CheckIfDialog()
+    {
+        return dialogPanel.activeSelf;
+    }
+
+    public void CloseDialogPanel()
+    {
+        GameController.Instance.ChangeGameState(GameState.GAMEPLAY);
+        dialogPanel.SetActive(false);
+        txtNameNPC.text = "";
+        txtDialog.text = "";
+    }
+
+    public void OpenCraftPanel()
+    {
+        GameController.Instance.ChangeGameState(GameState.PAUSE);
+        craftPanel.SetActive(true);
     }
 
     public void OpenTutorialPanel(string text)

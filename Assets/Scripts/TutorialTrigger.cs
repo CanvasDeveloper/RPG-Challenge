@@ -10,6 +10,7 @@ public class TutorialTrigger : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             UIController.Instance.OpenTutorialPanel(tutoString);
+            Destroy(gameObject);
         }
     }
 }

@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: "Po\xE7\xE3o Azul"
   description: Um liquido azul duvidoso, com gosto azedo que aumenta a velocidade
     de recarga de mana. (nessa versao tambem recupera vida).
-  healthRecovery: 15
+  healthRecovery: 6
   value: 1
   isEquipped: 0
   isKeyItem: 0

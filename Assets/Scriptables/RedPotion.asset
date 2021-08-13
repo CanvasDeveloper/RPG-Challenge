@@ -15,5 +15,7 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: b6431ec4e15e26c4db018b8ec6185cfd, type: 3}
   itemName: "Po\xE7\xE3o Vermelha"
   description: "Um l\xEDquido vermelho que restaura um pouco da sua sa\xFAde."
+  healthRecovery: 6
   value: 1
+  isEquipped: 1
   isKeyItem: 0

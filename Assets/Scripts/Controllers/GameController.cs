@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum GameState
 {
-    MENU, GAMEPLAY, PAUSE, GAMEOVER
+    MENU, GAMEPLAY, PAUSE, GAMEOVER, DIALOG
 }
 
 public class GameController : MonoBehaviour
@@ -37,6 +37,10 @@ public class GameController : MonoBehaviour
 
             case GameState.GAMEOVER:
                 StartCoroutine(DelayGameOver());
+            break;
+
+            case GameState.DIALOG:
+                
             break;
         }
     }

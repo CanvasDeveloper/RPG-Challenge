@@ -57,6 +57,9 @@ public class PlayerController : MonoBehaviour, IHealthSystem
     [SerializeField] private SkinnedMeshRenderer playerMesh;
     [SerializeField] private bool isMage;
 
+    [Header("Interaction")]
+    public Interaction interactionObject;
+
     private void Start()
     {
         character = GetComponent<CharacterController>();
@@ -69,6 +72,8 @@ public class PlayerController : MonoBehaviour, IHealthSystem
         normalAttackCollider.enabled = false;
         mainCamera = Camera.main;
         cinemachineVirtualCamera.LookAt = defaultTarget;
+
+        Inventory.Instance.CheckIfHaveMage();
     }
 
     private void Update() 
@@ -295,7 +300,10 @@ public class PlayerController : MonoBehaviour, IHealthSystem
 
     void Interact()
     {
-
+        if(interactionObject != null)
+        {
+            interactionObject.StartInteraction();
+        }
     }
 
     public void GetHit(int damage)
@@ -327,18 +335,23 @@ public class PlayerController : MonoBehaviour, IHealthSystem
 
     public void OnMovement(InputAction.CallbackContext value)
     {
-        inputMove = value.ReadValue<Vector2>().normalized;
+        if(GameController.Instance.currentState == GameState.GAMEPLAY)
+        {
+            inputMove = value.ReadValue<Vector2>().normalized;
+        }
     }
 
     public void OnAttack1(InputAction.CallbackContext value)
     {
         if(GameController.Instance.currentState == GameState.PAUSE) { return; }
+    
         if(value.started && currentState != PlayerState.DEAD) { Attack1(); }
     }
 
     public void OnAttack2(InputAction.CallbackContext value)
     {
         if(GameController.Instance.currentState == GameState.PAUSE) { return; }
+
         if(value.started && currentState != PlayerState.DEAD) { Attack2(); }
     }
 
@@ -364,6 +377,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
 
     public void OnUseItem(InputAction.CallbackContext value)
     {
+        if(GameController.Instance.currentState == GameState.DIALOG) { return; }
         if(value.started) { UseItem(); }
     }
 

@@ -12,6 +12,7 @@ TagManager:
   - EnemyHit
   - Enemy
   - Collectable
+  - Interaction
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Wall
   - Enemy
   - UIPlayer
-  - 
+  - CheckInteraction
   - 
   - 
   - 

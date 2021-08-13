@@ -40,6 +40,14 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
         LoadSlot();
     }
 
+    public void ResetSlot()
+    {
+        slotItem = null;
+        slotImage.sprite = null;
+        txtValue.text = "";
+        currentValue = 0;
+    }
+
 
     public void EquipItem()
     {
