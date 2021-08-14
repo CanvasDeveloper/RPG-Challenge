@@ -44,8 +44,9 @@ public class GameController : MonoBehaviour
             break;
 
             case GameState.VICTORY:
-                UIController.Instance.OpenVictoryPanel();
                 Time.timeScale = 0;
+                UIController.Instance.OpenVictoryPanel();
+                ChangeGameState(GameState.PAUSE);
             break;
         }
     }

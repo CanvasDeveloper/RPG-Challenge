@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: a323eca3b1d54094383d08e49a4a408b,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -4652,22 +4652,22 @@ PrefabInstance:
     - target: {fileID: 3713453055502171883, guid: 4f6316e7eff74544cacdf98db4a0725e,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99732864
+      value: 0.9822878
       objectReference: {fileID: 0}
     - target: {fileID: 3713453055502171883, guid: 4f6316e7eff74544cacdf98db4a0725e,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.07304529
+      value: 0.17989302
       objectReference: {fileID: 0}
     - target: {fileID: 3713453055502171883, guid: 4f6316e7eff74544cacdf98db4a0725e,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0000000010269572
+      value: 0.05157469
       objectReference: {fileID: 0}
     - target: {fileID: 3713453055502171883, guid: 4f6316e7eff74544cacdf98db4a0725e,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -4.0537196e-10
+      value: -0.009445222
       objectReference: {fileID: 0}
     - target: {fileID: 3713453056561027964, guid: 4f6316e7eff74544cacdf98db4a0725e,
         type: 3}
@@ -4677,22 +4677,22 @@ PrefabInstance:
     - target: {fileID: 3713453056561027964, guid: 4f6316e7eff74544cacdf98db4a0725e,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.99346477
+      value: 0.9740275
       objectReference: {fileID: 0}
     - target: {fileID: 3713453056561027964, guid: 4f6316e7eff74544cacdf98db4a0725e,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.11413956
+      value: 0.22027549
       objectReference: {fileID: 0}
     - target: {fileID: 3713453056561027964, guid: 4f6316e7eff74544cacdf98db4a0725e,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0000000018133605
+      value: 0.051140994
       objectReference: {fileID: 0}
     - target: {fileID: 3713453056561027964, guid: 4f6316e7eff74544cacdf98db4a0725e,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -1.3540652e-10
+      value: -0.011565492
       objectReference: {fileID: 0}
     - target: {fileID: 3713453056690207256, guid: 4f6316e7eff74544cacdf98db4a0725e,
         type: 3}
@@ -4777,32 +4777,32 @@ PrefabInstance:
     - target: {fileID: 3713453056983474853, guid: 4f6316e7eff74544cacdf98db4a0725e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3713453056983474853, guid: 4f6316e7eff74544cacdf98db4a0725e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.0000005
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3713453056983474853, guid: 4f6316e7eff74544cacdf98db4a0725e,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.98112357
+      value: 0.963957
       objectReference: {fileID: 0}
     - target: {fileID: 3713453056983474853, guid: 4f6316e7eff74544cacdf98db4a0725e,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.19299571
+      value: 0.26084045
       objectReference: {fileID: 0}
     - target: {fileID: 3713453056983474853, guid: 4f6316e7eff74544cacdf98db4a0725e,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.011989235
+      value: 0.050612263
       objectReference: {fileID: 0}
     - target: {fileID: 3713453056983474853, guid: 4f6316e7eff74544cacdf98db4a0725e,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0023583889
+      value: -0.013695347
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f6316e7eff74544cacdf98db4a0725e, type: 3}
@@ -5221,8 +5221,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a97b10ee782e24446a836aa07a4638d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutoString: "Voc\xEA tambem pode usar mouse esquerdo, ou bola para usar um ataque
-    mais poderoso"
+  tutoString: "Voc\xEA tambem pode usar mouse esquerdo, ou quadrado para usar um
+    ataque mais poderoso"
 --- !u!1001 &530486052
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27175,8 +27175,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1417333366}
-  m_LocalRotation: {x: 0.11413956, y: 0.0000000305731, z: -0.0000000035125556, w: 0.99346477}
-  m_LocalPosition: {x: -13.2, y: 2.5, z: -8.440001}
+  m_LocalRotation: {x: 0.22027546, y: 0.05114095, z: -0.011565481, w: 0.9740275}
+  m_LocalPosition: {x: -13.389973, y: 2.2993276, z: -6.344117}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -30365,7 +30365,7 @@ PrefabInstance:
     - target: {fileID: 1170563396242253287, guid: 8b1eed76a985a9a4da9c661a2afe1bae,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.4
+      value: 2.232
       objectReference: {fileID: 0}
     - target: {fileID: 1170563396242253287, guid: 8b1eed76a985a9a4da9c661a2afe1bae,
         type: 3}

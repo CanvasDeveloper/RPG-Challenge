@@ -36,6 +36,7 @@ public class UIController : MonoBehaviour
 
     [SerializeField]private Button primaryPauseButton;
     [SerializeField]private Button primaryGameoverButton;
+    [SerializeField]private Button primaryVictoryButton;
 
     private void Awake()
     {
@@ -92,6 +93,7 @@ public class UIController : MonoBehaviour
     public void OpenVictoryPanel()
     {
         victoryPanel.SetActive(true);
+        primaryVictoryButton.Select();
     }
 
     public void OpenCraftPanel()

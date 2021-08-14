@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
     public PlayerState currentState;
     [SerializeField]private BoxCollider shieldCollider;
     [SerializeField]private BoxCollider normalAttackCollider;
+    [SerializeField]private BoxCollider normalAttackCollider1;
     [SerializeField]private float stepSpeed;
     [SerializeField]private float turnSpeed = 15f;
     [SerializeField]private float delayAttackOneSpearEffect = 0.5f;
@@ -72,6 +73,7 @@ public class PlayerController : MonoBehaviour, IHealthSystem
 
         SetShieldCollisor(false);
         normalAttackCollider.enabled = false;
+        normalAttackCollider1.enabled = false;
         mainCamera = Camera.main;
         cinemachineVirtualCamera.LookAt = defaultTarget;
 
@@ -255,6 +257,10 @@ public class PlayerController : MonoBehaviour, IHealthSystem
                     StartCoroutine(InstantiateAttackDelay(attackOnePoint.position));
                 }
             }
+            else
+            {
+                StartCoroutine(NormalAttack1());
+            }
         }
     }
 
@@ -291,6 +297,14 @@ public class PlayerController : MonoBehaviour, IHealthSystem
         normalAttackCollider.enabled = true;
         yield return new WaitForSeconds(0.15f);
         normalAttackCollider.enabled = false;
+    }
+
+    IEnumerator NormalAttack1()
+    {
+        yield return new WaitForSeconds(0.25f);
+        normalAttackCollider1.enabled = true;
+        yield return new WaitForSeconds(0.15f);
+        normalAttackCollider1.enabled = false;
     }
 
     public void FinishAttack() //called by animator on exit animation
