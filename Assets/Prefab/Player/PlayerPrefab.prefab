@@ -2380,7 +2380,7 @@ MonoBehaviour:
   shieldCollider: {fileID: 3713453055365589075}
   normalAttackCollider: {fileID: 8268180698174933455}
   normalAttackCollider1: {fileID: 6730921398744331896}
-  stepSpeed: 2.6
+  stepSpeed: 2.97
   turnSpeed: 5
   delayAttackOneSpearEffect: 0.5
   delayToAttackOne: 0.7
