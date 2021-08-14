@@ -133,8 +133,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 618130573
+  m_SortingLayer: 1
   m_SortingOrder: 0
 --- !u!222 &1170563396242253285
 CanvasRenderer:
@@ -232,5 +232,5 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1170563396242253286}
   m_maskType: 0
-  _SortingLayerID: 0
+  _SortingLayerID: 618130573
   _SortingOrder: 0
